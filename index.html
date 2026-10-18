@@ -66,7 +66,19 @@
   .side-nav:focus-visible{outline:3px solid rgba(36,74,99,.28);outline-offset:3px}
   .side-nav-left{left:calc(50% - min(400px,46vw) - 62px)}
   .side-nav-right{right:calc(50% - min(400px,46vw) - 62px)}
-  .instrument-image-wrap{margin:0 0 22px}.instrument-image{display:block;width:100%;max-height:430px;object-fit:contain;border:1px solid var(--line);border-radius:12px;background:#fafafa}
+  .instrument-image-wrap{margin:0 0 22px}
+  .instrument-image{display:block;width:100%;max-height:430px;object-fit:contain;border:1px solid var(--line);border-radius:12px;background:#fafafa;cursor:zoom-in}
+  .instrument-image:hover{box-shadow:0 4px 18px rgba(0,0,0,.08)}
+  .instrument-image:focus-visible{outline:3px solid rgba(36,74,99,.35);outline-offset:4px}
+  .image-enlarge-hint{margin:7px 0 0;text-align:center;color:var(--muted);font-size:12px}
+  dialog.image-lightbox{width:100vw;max-width:none;height:100vh;max-height:none;margin:0;padding:36px;border:0;border-radius:0;background:rgba(0,0,0,.94);overflow:hidden}
+  dialog.image-lightbox::backdrop{background:rgba(0,0,0,.65)}
+  .image-lightbox-inner{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+  .image-lightbox-image{display:block;max-width:96vw;max-height:92vh;object-fit:contain}
+  .image-lightbox-close{position:fixed;top:18px;right:22px;z-index:3;width:46px;height:46px;border:1px solid rgba(255,255,255,.28);border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:30px;line-height:1;cursor:pointer}
+  .image-lightbox-close:hover{background:rgba(255,255,255,.22)}
+  .image-lightbox-close:focus-visible{outline:3px solid #fff;outline-offset:3px}
+  .image-lightbox-caption{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);max-width:min(820px,88vw);padding:7px 12px;border-radius:8px;background:rgba(0,0,0,.48);color:#fff;font-size:12px;text-align:center}
   .detail-grid{display:grid;grid-template-columns:190px 1fr;gap:10px 18px;font-size:14px;line-height:1.5}.detail-grid dt{font-weight:700;color:var(--muted)}.detail-grid dd{margin:0}
   .long-section{margin-top:22px}.section-title{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:800;margin:0 0 8px}.long-section div{line-height:1.6}
   .empty{padding:30px;text-align:center;color:var(--muted)}
@@ -139,6 +151,14 @@
       <span class="keyboard-hints">← / → Browse · Esc Close</span>
     </div>
     <button class="btn" id="nextInstrument">Next →</button>
+  </div>
+</dialog>
+
+<dialog id="imageLightbox" class="image-lightbox" aria-label="Full-screen instrument image">
+  <div class="image-lightbox-inner">
+    <button id="closeImageLightbox" class="image-lightbox-close" type="button" aria-label="Close full-screen image" title="Close">×</button>
+    <img id="imageLightboxImg" class="image-lightbox-image" alt="" />
+    <div id="imageLightboxCaption" class="image-lightbox-caption" hidden></div>
   </div>
 </dialog>
 
@@ -363,6 +383,42 @@ async function copyCurrentRecordLink(){
   }catch{ window.prompt('Copy this instrument link:',link); }
 }
 
+const imageLightbox=document.getElementById('imageLightbox');
+const imageLightboxImg=document.getElementById('imageLightboxImg');
+const imageLightboxCaption=document.getElementById('imageLightboxCaption');
+const closeImageLightboxButton=document.getElementById('closeImageLightbox');
+let imageLightboxReturnFocus=null;
+
+function openImageLightbox(src,alt=''){
+  imageLightboxReturnFocus=document.activeElement;
+  imageLightboxImg.src=src;
+  imageLightboxImg.alt=alt || 'Instrument illustration';
+  imageLightboxCaption.textContent=alt || '';
+  imageLightboxCaption.hidden=!String(alt || '').trim();
+  if(!imageLightbox.open) imageLightbox.showModal();
+  closeImageLightboxButton.focus();
+}
+
+function closeImageLightbox(){
+  if(imageLightbox.open) imageLightbox.close();
+}
+
+closeImageLightboxButton.onclick=closeImageLightbox;
+imageLightbox.addEventListener('click',e=>{
+  if(e.target===imageLightbox || e.target.classList.contains('image-lightbox-inner')){
+    closeImageLightbox();
+  }
+});
+imageLightbox.addEventListener('close',()=>{
+  imageLightboxImg.src='';
+  imageLightboxCaption.textContent='';
+  imageLightboxCaption.hidden=true;
+  if(imageLightboxReturnFocus && document.contains(imageLightboxReturnFocus)){
+    imageLightboxReturnFocus.focus({preventScroll:true});
+  }
+  imageLightboxReturnFocus=null;
+});
+
 function openRecord(id,options={}){
   const record=instruments.find(i=>(i.id || '')===id); if(!record) return;
   if(options.fromResults && !dialog.open){ originatingRecordId=id; resultsScrollY=window.scrollY; }
@@ -377,8 +433,28 @@ function openRecord(id,options={}){
   const imageField=fields.find(f=>f.format==='image' && yes(f.popup));
   if(imageField && record[imageField.field]){
     const wrap=document.createElement('div'); wrap.className='instrument-image-wrap';
-    const img=document.createElement('img'); img.className='instrument-image'; img.src=record[imageField.field]; img.alt=record.image_alt || `${titleValue || 'Instrument'} illustration`;
-    wrap.appendChild(img); modal.appendChild(wrap);
+    const img=document.createElement('img');
+    img.className='instrument-image';
+    img.src=record[imageField.field];
+    img.alt=record.image_alt || `${titleValue || 'Instrument'} illustration`;
+    img.tabIndex=0;
+    img.setAttribute('role','button');
+    img.setAttribute('aria-label',`Open ${img.alt} full screen`);
+    img.title='Click to enlarge';
+    img.addEventListener('click',()=>openImageLightbox(img.src,img.alt));
+    img.addEventListener('keydown',e=>{
+      if(e.key==='Enter' || e.key===' '){
+        e.preventDefault();
+        openImageLightbox(img.src,img.alt);
+      }
+    });
+
+    const hint=document.createElement('div');
+    hint.className='image-enlarge-hint';
+    hint.textContent='Click image to enlarge';
+
+    wrap.append(img,hint);
+    modal.appendChild(wrap);
   }
 
   const regular=sortedFields(f=>yes(f.popup) && !['longtext','image','hidden'].includes(f.format) && f.format!=='primary')
@@ -428,6 +504,7 @@ dialog.addEventListener('close',()=>{
 });
 
 document.addEventListener('keydown',e=>{
+  if(imageLightbox.open) return;
   if(!dialog.open || e.altKey || e.ctrlKey || e.metaKey) return;
   const active=document.activeElement;
   if(active && (['INPUT','TEXTAREA','SELECT'].includes(active.tagName) || active.isContentEditable)) return;

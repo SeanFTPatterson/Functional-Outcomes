@@ -74,6 +74,19 @@ The instrument pop-up includes several navigation aids:
 
 Viewed status uses browser `localStorage`; it does not require an account or server-side viewing history.
 
+
+## Full-screen instrument images
+
+Instrument graphics in the pop-up can be opened in a full-screen viewer:
+
+- **Click the image** to enlarge it.
+- With the image focused, press **Enter** or **Space** to enlarge it.
+- Select the **×** button, click the dark background, or press **Esc** to close the full-screen image.
+- Focus returns to the instrument image after the full-screen viewer closes.
+- A short `Click image to enlarge` hint is displayed below instrument graphics.
+
+The full-screen viewer uses the existing `image` and `image_alt` values from `data/instruments.csv`; no additional CSV fields are required.
+
 ## Prototype disclaimer
 
 The included instrument records have been identified as potential candidate instruments for measuring the aSAH Core Domain: Functional Outcomes. They should not be treated as the definitive aSAH instrument inventory or as COS endorsements.
