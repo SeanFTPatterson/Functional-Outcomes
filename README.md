@@ -2,7 +2,7 @@
 
 - `data/instruments.csv` contains the instrument records.
 - `data/fields.csv` controls which fields appear in the main table, pop-up, filters, and search.
-- `images/` contains the replaceable team logo and optional instrument graphics.
+- `images/` contains the SAH HOPE logo and instrument graphics.
 - URL fields can render as clickable links with link text configured entirely in `data/fields.csv`.
 
 ## Folder structure
@@ -48,6 +48,31 @@ Supported `format` values:
 
 
 
+
+
+## Instrument pop-up navigation
+
+The instrument pop-up supports faster browsing through the instruments currently shown by the active search and filters:
+
+- **Sticky footer navigation** keeps `Previous`, the record position (for example, `3 of 14`), and `Next` visible while scrolling through long records.
+- **Desktop side arrows** provide an additional visual way to move between records on wider screens. They are hidden on smaller screens to avoid covering content.
+- **Keyboard navigation**: while the pop-up is open, use the left and right arrow keys to move to the previous or next instrument.
+- Navigation follows the **currently filtered list**, rather than always moving through every instrument in the database.
+- Previous/Next controls are automatically disabled at the first and last matching records.
+
+## Enhanced record navigation and deep links
+
+The instrument pop-up includes several navigation aids:
+
+- **Sticky instrument header** keeps the instrument title, `Back to results`, `Copy link`, and close controls visible while scrolling.
+- **Back to results** closes the record, restores the prior results-page position, and highlights the originating row to help users re-orient.
+- **Viewed markers** are stored only in the visitor's browser. Opened instruments display `✓ Viewed`; `Clear viewed markers` resets this local history.
+- **Record jump menu** lists all instruments in the currently filtered/search result set. It uses the full instrument name and adds the acronym in parentheses only when an acronym exists.
+- **Keyboard hints** in the footer advertise the available shortcuts: left/right arrows browse records and `Esc` closes the dialog.
+- **Direct instrument links** use `?instrument=INSTRUMENT_ID`. Visiting such a URL automatically opens that instrument record. Instrument names in the results table are also real links, so users can copy them or open them in a new tab.
+- **Copy link** copies the direct URL for the currently open record.
+
+Viewed status uses browser `localStorage`; it does not require an account or server-side viewing history.
 
 ## Prototype disclaimer
 
