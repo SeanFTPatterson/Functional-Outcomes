@@ -167,6 +167,7 @@ let instruments = [];
 let instrumentHeaders = [];
 let fields = [];
 let filterControls = {};
+let badgeStyles = [];
 let currentRecordId = null;
 let originatingRecordId = null;
 let highlightedRecordId = null;
@@ -229,15 +230,46 @@ function updateBrowserRecordUrl(id){
   history.replaceState(null,'',url);
 }
 
-function badge(value){
-  const s=String(value || ''); const low=s.toLowerCase();
-  const c=low.startsWith('retained')?'b-retained':low.startsWith('under')?'b-review':low.startsWith('identified')?'b-identified':'';
-  return `<span class="badge ${c}">${escapeHTML(s)}</span>`;
+function safeCssColor(value, fallback){
+  const s=String(value || '').trim();
+  if(!s) return fallback;
+  if(/^#[0-9a-f]{3,8}$/i.test(s)) return s;
+  if(/^rgba?\(\s*[\d.%\s,]+\)$/i.test(s)) return s;
+  if(/^hsla?\(\s*[\d.%\s,]+\)$/i.test(s)) return s;
+  if(/^[a-z]+$/i.test(s)) return s;
+  return fallback;
 }
+
+function badge(fieldName,value){
+  const text=String(value || '').trim();
+  const fieldKey=String(fieldName || '').trim().toLowerCase();
+  const valueKey=text.toLowerCase();
+
+  const specific=badgeStyles.find(style =>
+    String(style.field || '').trim().toLowerCase()===fieldKey &&
+    String(style.value || '').trim().toLowerCase()===valueKey
+  );
+
+  const wildcard=badgeStyles.find(style =>
+    String(style.field || '').trim()==='*' &&
+    String(style.value || '').trim().toLowerCase()===valueKey
+  );
+
+  const match=specific || wildcard;
+
+  if(!match){
+    return `<span class="badge">${escapeHTML(text)}</span>`;
+  }
+
+  const background=safeCssColor(match.background,'#f1f3f5');
+  const colour=safeCssColor(match.text,'#495057');
+  return `<span class="badge" style="background:${escapeHTML(background)};color:${escapeHTML(colour)}">${escapeHTML(text)}</span>`;
+}
+
 
 function formatValue(field, record, context='table'){
   const value = record[field.field] ?? '';
-  if (field.format === 'badge') return badge(value);
+  if (field.format === 'badge') return badge(field.field,value);
   if (field.format === 'primary') {
     const acronym = record.acronym ? ` <span class="acronym">(${escapeHTML(record.acronym)})</span>` : '';
     const viewed = context==='table' && record.id && getViewedInstruments().has(record.id) ? ` <span class="viewed-marker" title="Viewed">✓ Viewed</span>` : '';
@@ -523,21 +555,30 @@ document.getElementById('download').onclick=()=>{
 
 async function init(){
   try{
-    const [instrumentResponse,fieldResponse]=await Promise.all([
+    const [instrumentResponse,fieldResponse,badgeResponse]=await Promise.all([
       fetch('data/instruments.csv',{cache:'no-store'}),
-      fetch('data/fields.csv',{cache:'no-store'})
+      fetch('data/fields.csv',{cache:'no-store'}),
+      fetch('data/badge_styles.csv',{cache:'no-store'})
     ]);
     if(!instrumentResponse.ok) throw new Error(`Could not load instruments.csv (HTTP ${instrumentResponse.status})`);
     if(!fieldResponse.ok) throw new Error(`Could not load fields.csv (HTTP ${fieldResponse.status})`);
-    const instrumentData=parseCSV(await instrumentResponse.text()); const fieldData=parseCSV(await fieldResponse.text());
-    instruments=instrumentData.records; instrumentHeaders=instrumentData.headers; fields=fieldData.records;
+    if(!badgeResponse.ok) throw new Error(`Could not load badge_styles.csv (HTTP ${badgeResponse.status})`);
+
+    const instrumentData=parseCSV(await instrumentResponse.text());
+    const fieldData=parseCSV(await fieldResponse.text());
+    const badgeData=parseCSV(await badgeResponse.text());
+
+    instruments=instrumentData.records;
+    instrumentHeaders=instrumentData.headers;
+    fields=fieldData.records;
+    badgeStyles=badgeData.records;
     fields=fields.filter(f=>instrumentHeaders.includes(f.field));
     buildInterface(); render();
 
     const requestedId=new URL(window.location.href).searchParams.get('instrument');
     if(requestedId && instruments.some(record=>(record.id || '')===requestedId)){ openRecord(requestedId,{fromUrl:true}); }
   }catch(err){
-    console.error(err); const empty=document.getElementById('empty');empty.hidden=false;empty.textContent='Could not load the CSV configuration/data files. This prototype is designed to run from GitHub Pages (or another web server), not directly from a local file.';
+    console.error(err); const empty=document.getElementById('empty');empty.hidden=false;empty.textContent='Could not load the CSV configuration/data files (instruments.csv, fields.csv, or badge_styles.csv). This prototype is designed to run from GitHub Pages (or another web server), not directly from a local file.';
   }
 }
 init();

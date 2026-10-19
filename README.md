@@ -15,6 +15,7 @@ README.md
 data/
   instruments.csv
   fields.csv
+  badge_styles.csv
 
 images/
   team-logo.svg
@@ -86,6 +87,41 @@ Instrument graphics in the pop-up can be opened in a full-screen viewer:
 - A short `Click image to enlarge` hint is displayed below instrument graphics.
 
 The full-screen viewer uses the existing `image` and `image_alt` values from `data/instruments.csv`; no additional CSV fields are required.
+
+
+## Configurable badge colours
+
+Badge colours are controlled by `data/badge_styles.csv`, so colours can be changed without editing `index.html`.
+
+The file uses four columns:
+
+| Column | Purpose |
+|---|---|
+| `field` | Exact field name from `instruments.csv`, or `*` for a global rule |
+| `value` | Exact category/response value to match |
+| `background` | Badge background colour |
+| `text` | Badge text colour |
+
+Example:
+
+```csv
+field,value,background,text
+*,Yes,#e8f5ee,#23613b
+*,Partially / with concerns,#fff6dd,#7a5a00
+*,No,#fdecec,#9b2c2c
+*,Unable to judge,#eef2f6,#475467
+status,Retained,#e8f5ee,#23613b
+status,Identified,#edf4ff,#285ea8
+```
+
+Rules are matched case-insensitively.
+
+- A **field-specific** rule takes priority over a wildcard (`*`) rule.
+- A wildcard rule lets the same category use the same colour across multiple assessment columns.
+- If no matching rule is found, the badge uses the default neutral grey style.
+- A field must still use `format=badge` in `data/fields.csv` for these styles to be applied.
+
+This makes it possible to use consistent traffic-light-style colours for responses such as `Yes`, `Partially / with concerns`, `No`, and `Unable to judge`, while giving fields such as `status` their own colour scheme.
 
 ## Prototype disclaimer
 
