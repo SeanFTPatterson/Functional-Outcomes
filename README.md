@@ -123,6 +123,53 @@ Rules are matched case-insensitively.
 
 This makes it possible to use consistent traffic-light-style colours for responses such as `Yes`, `Partially / with concerns`, `No`, and `Unable to judge`, while giving fields such as `status` their own colour scheme.
 
+
+## Badge rationale pop-ups
+
+Any field displayed with `format = badge` can have an optional rationale. The rationale is stored in `data/instruments.csv` using the naming convention:
+
+```text
+<badge_field>_rationale
+```
+
+For a Domain Match field named `domain_match`, add a column named:
+
+```text
+domain_match_rationale
+```
+
+Example:
+
+```csv
+id,name,domain_match,domain_match_rationale
+FUN001,Example Instrument,Yes,"Directly assesses the intended Functional Outcomes domain."
+FUN002,Another Instrument,Partially / with concerns,"Captures basic activities but does not adequately assess instrumental or social role performance."
+```
+
+If `domain_match_rationale` is also listed in `data/fields.csv`, configure it as a hidden field:
+
+```text
+field = domain_match_rationale
+format = hidden
+table = No
+popup = No
+filter = No
+search = No
+```
+
+When a badge has a non-empty rationale:
+
+- a small `ⓘ` appears inside the badge;
+- **hovering** over the badge shows the rationale;
+- **keyboard focus** shows the rationale;
+- **clicking or tapping** pins the rationale open for touch-screen users;
+- clicking elsewhere closes it;
+- `Esc` closes the rationale first while an instrument record is open.
+
+The feature is generic. For example, a badge field named `feasibility` can use `feasibility_rationale`.
+
+Badge colours still come from `data/badge_styles.csv`, so the rationale feature does not change the configurable colour system.
+
 ## Prototype disclaimer
 
 The included instrument records have been identified as potential candidate instruments for measuring the aSAH Core Domain: Functional Outcomes. They should not be treated as the definitive aSAH instrument inventory or as COS endorsements.

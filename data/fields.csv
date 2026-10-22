@@ -6,6 +6,7 @@ domain,Core domain,No,No,No,Yes,40,text,
 domain-definition,Domain definition,No,Yes,No,No,45,url,View definition
 status,Instrument selection status,No,No,No,No,50,badge,
 domain-match,Preliminary Domain Match Assessment,Yes,Yes,Yes,No,55,badge,
+domain_match_rationale,Domain Match Rationale,No,No,No,No,56,hiddn,
 identified-from,Identified in,No,Yes,No,No,60,text,
 review-link,Review link,No,Yes,No,No,70,url,View review
 description,Description,No,Yes,No,No,80,longtext,
