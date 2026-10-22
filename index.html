@@ -37,8 +37,8 @@
   .badge-rationale{appearance:none;border:0;font-family:inherit;line-height:1.2;cursor:help;display:inline-flex;align-items:center;gap:5px}
   .badge-rationale:hover,.badge-rationale:focus-visible{outline:2px solid rgba(36,74,99,.30);outline-offset:2px}
   .badge-info-icon{font-size:11px;font-weight:800;opacity:.78}
-  .rationale-popover{position:fixed;z-index:10000;width:min(390px,calc(100vw - 28px));padding:13px 15px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 14px 38px rgba(0,0,0,.20);font-size:13px;line-height:1.5}
-  .rationale-popover[hidden]{display:none}
+  .rationale-popover{position:fixed;inset:auto;margin:0;z-index:10000;width:min(390px,calc(100vw - 28px));padding:13px 15px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 14px 38px rgba(0,0,0,.20);font-size:13px;line-height:1.5}
+  .rationale-popover:not(:popover-open){display:none}
   .rationale-popover-title{display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:800;color:var(--ink);margin-bottom:6px}
   .rationale-popover-close{appearance:none;border:0;background:transparent;color:var(--muted);font-size:19px;line-height:1;cursor:pointer;padding:0}
   .rationale-popover-close:hover{color:var(--ink)}
@@ -172,7 +172,7 @@
 </dialog>
 
 
-<div id="rationalePopover" class="rationale-popover" hidden role="dialog" aria-modal="false" aria-labelledby="rationalePopoverTitle">
+<div id="rationalePopover" class="rationale-popover" popover="manual" role="dialog" aria-modal="false" aria-labelledby="rationalePopoverTitle">
   <div class="rationale-popover-title">
     <span id="rationalePopoverTitle">Rationale</span>
     <button id="rationalePopoverClose" class="rationale-popover-close" type="button" aria-label="Close rationale" title="Close">×</button>
@@ -239,8 +239,34 @@ const rationalePopoverClose=document.getElementById('rationalePopoverClose');
 let activeRationaleBadge=null;
 let rationalePinned=false;
 
+function rationaleIsOpen(){
+  try{
+    return rationalePopover.matches(':popover-open');
+  }catch{
+    return rationalePopover.dataset.fallbackOpen==='true';
+  }
+}
+
+function openRationalePopover(){
+  if(typeof rationalePopover.showPopover==='function'){
+    if(!rationaleIsOpen()) rationalePopover.showPopover();
+  }else{
+    rationalePopover.dataset.fallbackOpen='true';
+    rationalePopover.style.display='block';
+  }
+}
+
+function closeRationalePopover(){
+  if(typeof rationalePopover.hidePopover==='function'){
+    if(rationaleIsOpen()) rationalePopover.hidePopover();
+  }else{
+    rationalePopover.dataset.fallbackOpen='false';
+    rationalePopover.style.display='none';
+  }
+}
+
 function positionRationalePopover(button){
-  if(!button || rationalePopover.hidden) return;
+  if(!button || !rationaleIsOpen()) return;
 
   const rect=button.getBoundingClientRect();
   const gap=8;
@@ -277,7 +303,7 @@ function showRationale(button,{pinned=false}={}){
   const label=String(button.dataset.rationaleLabel || '').trim();
   rationalePopoverTitle.textContent=label ? `Rationale: ${label}` : 'Rationale';
 
-  rationalePopover.hidden=false;
+  openRationalePopover();
   button.setAttribute('aria-expanded','true');
 
   requestAnimationFrame(()=>positionRationalePopover(button));
@@ -292,13 +318,23 @@ function hideRationale({returnFocus=false}={}){
     }
   }
 
-  rationalePopover.hidden=true;
+  closeRationalePopover();
   rationalePinned=false;
   activeRationaleBadge=null;
 }
 
 rationalePopoverClose.addEventListener('click',()=>{
   hideRationale({returnFocus:true});
+});
+
+rationalePopover.addEventListener('toggle',e=>{
+  if(e.newState==='closed'){
+    if(activeRationaleBadge){
+      activeRationaleBadge.setAttribute('aria-expanded','false');
+    }
+    rationalePinned=false;
+    activeRationaleBadge=null;
+  }
 });
 
 // The table and instrument pop-up are re-rendered dynamically, so use delegation.
@@ -309,7 +345,7 @@ document.addEventListener('click',e=>{
     e.preventDefault();
     e.stopPropagation();
 
-    if(activeRationaleBadge===badge && !rationalePopover.hidden && rationalePinned){
+    if(activeRationaleBadge===badge && rationaleIsOpen() && rationalePinned){
       hideRationale({returnFocus:true});
     }else{
       showRationale(badge,{pinned:true});
@@ -355,13 +391,13 @@ document.addEventListener('focusout',e=>{
 });
 
 window.addEventListener('resize',()=>{
-  if(activeRationaleBadge && !rationalePopover.hidden){
+  if(activeRationaleBadge && rationaleIsOpen()){
     positionRationalePopover(activeRationaleBadge);
   }
 });
 
 window.addEventListener('scroll',()=>{
-  if(activeRationaleBadge && !rationalePopover.hidden){
+  if(activeRationaleBadge && rationaleIsOpen()){
     positionRationalePopover(activeRationaleBadge);
   }
 },true);
@@ -707,7 +743,7 @@ dialog.addEventListener('close',()=>{
 document.addEventListener('keydown',e=>{
   if(imageLightbox.open) return;
 
-  if(e.key==='Escape' && !rationalePopover.hidden){
+  if(e.key==='Escape' && rationaleIsOpen()){
     e.preventDefault();
     e.stopPropagation();
     hideRationale({returnFocus:true});

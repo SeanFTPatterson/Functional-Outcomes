@@ -170,6 +170,13 @@ The feature is generic. For example, a badge field named `feasibility` can use `
 
 Badge colours still come from `data/badge_styles.csv`, so the rationale feature does not change the configurable colour system.
 
+
+### Rationale pop-ups inside the instrument window
+
+The rationale viewer now uses the browser's native **Popover API** (`popover="manual"`). The instrument record itself is a modal `<dialog>`, and ordinary page elements can be hidden behind that dialog even with a high `z-index`.
+
+Native popovers are also placed in the browser's **top layer**, so the rationale can appear above an open instrument record as intended. A fallback is included for browsers without Popover API support.
+
 ## Prototype disclaimer
 
 The included instrument records have been identified as potential candidate instruments for measuring the aSAH Core Domain: Functional Outcomes. They should not be treated as the definitive aSAH instrument inventory or as COS endorsements.
