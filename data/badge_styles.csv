@@ -11,3 +11,7 @@ status,Under review,#fff6dd,#7a5a00
 status,Identified,#edf4ff,#285ea8
 domain-match,Poor match,#fdecec,#9b2c2c
 domain-match,Match,#e8f5ee,#23613b
+domain_match_1,Explicit,#e8f5ee,#23613b
+domain_match_1,Partial / indirect,#fff6dd,#7a5a00
+domain_match_1,Absent,#fdecec,#9b2c2c
+domain_match_1,Unverified (no rating),#eef2f6,#475467

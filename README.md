@@ -177,6 +177,64 @@ The rationale viewer now uses the browser's native **Popover API** (`popover="ma
 
 Native popovers are also placed in the browser's **top layer**, so the rationale can appear above an open instrument record as intended. A fallback is included for browsers without Popover API support.
 
+## Domain Match heat map view
+
+The results page now includes a two-option view toggle:
+
+- **Standard view** — preserves the existing configurable summary table and row-to-record navigation.
+- **Domain Match heat map** — compares component-level Domain Match ratings across the same instruments currently shown by the active search and filters.
+
+The selected view is saved in the visitor's browser using `localStorage`, so returning to the page restores the last-used view.
+
+### Configuring heat map columns
+
+The preferred approach is to add two optional columns to `data/fields.csv`:
+
+| Column | Purpose |
+|---|---|
+| `heatmap` | `Yes` to include the field as a heat map column |
+| `heatmap_order` | Optional numeric order for heat map columns; falls back to `display_order` |
+| `heatmap_role` | Optional; set to `overall` to visually separate the overall judgement from component ratings |
+
+Example:
+
+```csv
+field,label,table,popup,filter,search,display_order,format,link_text,heatmap,heatmap_order,heatmap_role
+domain_match_concept,Concept coverage,No,Yes,No,No,40,badge,,Yes,1,
+domain_match_population,Applicability,No,Yes,No,No,41,badge,,Yes,2,
+domain_match_interpretation,Interpretability,No,Yes,No,No,42,badge,,Yes,3,
+domain_match,Overall Domain Match,Yes,Yes,Yes,Yes,20,badge,,Yes,99,overall
+```
+
+If no fields are explicitly marked `heatmap=Yes`, the page automatically falls back to badge fields named `domain_match` or beginning with `domain_match_`. Fields ending in `_rationale` are excluded automatically.
+
+### Heat map rationales
+
+Each component can use the same rationale naming convention as the existing badges:
+
+```text
+<heatmap_field>_rationale
+```
+
+For example:
+
+```text
+domain_match_concept
+domain_match_concept_rationale
+```
+
+When a rationale is available, the coloured heat map cell can be hovered, keyboard-focused, clicked, or tapped to open the existing rationale popover. The cell itself does not require an additional information icon.
+
+### Heat map colours and legend
+
+Heat map cells use the same rules in `data/badge_styles.csv` as ordinary badges. This keeps the colour meaning consistent between the standard table, instrument pop-up, and heat map.
+
+The heat map automatically builds a legend from rating values present in the currently filtered result set. The instrument-name column remains sticky while horizontally scrolling, and the overall Domain Match column is visually separated from the component columns.
+
+### Filtering and instrument records
+
+The heat map is not a separate dataset. It uses `filteredRows()`, so all existing search and dropdown filters apply identically in both views. Selecting an instrument name in the heat map opens the same detailed instrument record, including viewed markers and record navigation.
+
 ## Prototype disclaimer
 
 The included instrument records have been identified as potential candidate instruments for measuring the aSAH Core Domain: Functional Outcomes. They should not be treated as the definitive aSAH instrument inventory or as COS endorsements.
