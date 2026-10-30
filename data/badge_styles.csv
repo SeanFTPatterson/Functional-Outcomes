@@ -15,3 +15,11 @@ domain_match_1,Explicit,#e8f5ee,#23613b
 domain_match_1,Partial / indirect,#fff6dd,#7a5a00
 domain_match_1,Absent,#fdecec,#9b2c2c
 domain_match_1,Unverified (no rating),#eef2f6,#475467
+domain_match_2,Explicit,#e8f5ee,#23613b
+domain_match_2,Partial / indirect,#fff6dd,#7a5a00
+domain_match_2,Absent,#fdecec,#9b2c2c
+domain_match_2,Unverified (no rating),#eef2f6,#475467
+domain_match_3,Explicit,#e8f5ee,#23613b
+domain_match_3,Partial / indirect,#fff6dd,#7a5a00
+domain_match_3,Absent,#fdecec,#9b2c2c
+domain_match_3,Unverified (no rating),#eef2f6,#475467
