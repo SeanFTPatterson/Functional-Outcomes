@@ -9,29 +9,27 @@ field,value,background,text
 status,Retained,#e8f5ee,#23613b
 status,Under review,#fff6dd,#7a5a00
 status,Identified,#edf4ff,#285ea8
+domain-match,Good match,#e8f5ee,#23613b
+domain-match,Somewhat good,#fff6dd,#7a5a00
+domain-match,Somewhat poor,#FCE6CF,#8A4A08
 domain-match,Poor match,#fdecec,#9b2c2c
-domain-match,Match,#e8f5ee,#23613b
-domain_match_1,Explicit,#e8f5ee,#23613b
+domain_match_1,Present,#e8f5ee,#23613b
 domain_match_1,Partial / indirect,#fff6dd,#7a5a00
 domain_match_1,Absent,#fdecec,#9b2c2c
 domain_match_1,Unverified (no rating),#eef2f6,#475467
-domain_match_2,Explicit,#e8f5ee,#23613b
+domain_match_2,Present,#e8f5ee,#23613b
 domain_match_2,Partial / indirect,#fff6dd,#7a5a00
 domain_match_2,Absent,#fdecec,#9b2c2c
 domain_match_2,Unverified (no rating),#eef2f6,#475467
-domain_match_3,Explicit,#e8f5ee,#23613b
+domain_match_3,Present,#e8f5ee,#23613b
 domain_match_3,Partial / indirect,#fff6dd,#7a5a00
 domain_match_3,Absent,#fdecec,#9b2c2c
 domain_match_3,Unverified (no rating),#eef2f6,#475467
-domain_match_4,Explicit,#e8f5ee,#23613b
+domain_match_4,Present,#e8f5ee,#23613b
 domain_match_4,Partial / indirect,#fff6dd,#7a5a00
 domain_match_4,Absent,#fdecec,#9b2c2c
 domain_match_4,Unverified (no rating),#eef2f6,#475467
-domain_match_5,Explicit,#e8f5ee,#23613b
+domain_match_5,Present,#e8f5ee,#23613b
 domain_match_5,Partial / indirect,#fff6dd,#7a5a00
 domain_match_5,Absent,#fdecec,#9b2c2c
 domain_match_5,Unverified (no rating),#eef2f6,#475467
-domain_match_6,Explicit,#e8f5ee,#23613b
-domain_match_6,Partial / indirect,#fff6dd,#7a5a00
-domain_match_6,Absent,#fdecec,#9b2c2c
-domain_match_6,Unverified (no rating),#eef2f6,#475467
