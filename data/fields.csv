@@ -16,6 +16,9 @@ feasibility_2,Training,No,No,No,No,58,badge,,,,,Yes,,,
 feasibility_3,Access / licensing,No,No,No,No,59,badge,,,,,Yes,,,
 feasibility_4,Language availability,No,No,No,No,60,badge,,,,,Yes,,,
 feasibility_5,Scoring complexity,No,No,No,No,61,badge,,,,,Yes,,,
+administration-method,Administration method,No,No,No,No,62,longtext,,,,,Yes,,,detailed
+delivery-format,Delivery format,No,No,No,No,63,longtext,,,,,Yes,,,detailed
+Respondent-assessor,Respondent / assessor,No,No,No,No,64,longtext,,,,,Yes,,,detailed
 identified-from,Identified in,No,Yes,No,No,70,text,,,,,,,,
 review-link,Review link,No,Yes,No,No,75,url,View review,,,,,,,
 description,Description,No,Yes,No,No,80,longtext,,,,,,,,
