@@ -159,7 +159,7 @@ search = No
 
 When a badge has a non-empty rationale:
 
-- a small `ⓘ` appears inside the badge;
+- the badge itself indicates that a rationale is available through hover, keyboard focus, click, or tap;
 - **hovering** over the badge shows the rationale;
 - **keyboard focus** shows the rationale;
 - **clicking or tapping** pins the rationale open for touch-screen users;
@@ -179,10 +179,11 @@ Native popovers are also placed in the browser's **top layer**, so the rationale
 
 ## Domain Match heat map view
 
-The results page now includes a two-option view toggle:
+The results page now includes a three-option view toggle:
 
 - **Standard view** — preserves the existing configurable summary table and row-to-record navigation.
-- **Domain Match heat map** — compares component-level Domain Match ratings across the same instruments currently shown by the active search and filters.
+- **Domain Match** — compares component-level Domain Match ratings across the same instruments currently shown by the active search and filters.
+- **Feasibility** — provides a horizontally scrollable comparison table for categorical feasibility ratings and open-text information, with Compact and Detailed modes.
 
 The selected view is saved in the visitor's browser using `localStorage`, so returning to the page restores the last-used view.
 
@@ -234,6 +235,55 @@ The heat map automatically builds a legend from rating values present in the cur
 ### Filtering and instrument records
 
 The heat map is not a separate dataset. It uses `filteredRows()`, so all existing search and dropdown filters apply identically in both views. Selecting an instrument name in the heat map opens the same detailed instrument record, including viewed markers and record navigation.
+
+## Feasibility comparison view
+
+The **Feasibility** tab is designed for wider mixed-format assessments. It uses a sticky instrument-name column, native horizontal scrolling, and dedicated **Scroll left / Scroll right** buttons.
+
+Two display modes are available:
+
+- **Compact** — shows the core feasibility fields intended for rapid comparison, such as categorical ratings and an overall judgement or score.
+- **Detailed** — shows all configured feasibility fields, including longer comments or open-text information.
+
+Long text is shown as a short preview with **View details**. Selecting the preview opens the complete text in the same accessible popover used for rationales, avoiding excessively tall table rows.
+
+### Configuring feasibility columns
+
+The preferred approach is to add optional feasibility columns to `data/fields.csv`:
+
+| Column | Purpose |
+|---|---|
+| `feasibility` | `Yes` to include the field in the Feasibility tab |
+| `feasibility_order` | Optional numeric left-to-right order; falls back to `display_order` |
+| `feasibility_group` | Optional short group label shown above the column label, such as `Practical implementation`, `Patient considerations`, or `Overall` |
+| `feasibility_role` | Optional role. Use `overall` to visually separate an overall judgement/score; use `comment`, `narrative`, `details`, or `open text` for detailed-only text fields |
+| `feasibility_mode` | Optional. Set to `detailed` to hide the field in Compact mode. `both` or `compact` keeps it visible in Compact mode |
+| `feasibility_detail` | Alternative shorthand: `Yes` marks the field as Detailed-only |
+
+Example:
+
+```csv
+field,label,table,popup,filter,search,display_order,format,link_text,feasibility,feasibility_order,feasibility_group,feasibility_role,feasibility_mode
+feasibility_ease,Ease of use,No,Yes,No,No,50,badge,,Yes,1,Practical implementation,,both
+feasibility_time,Time required,No,Yes,No,No,51,badge,,Yes,2,Practical implementation,,both
+feasibility_equipment,Equipment,No,Yes,No,No,52,badge,,Yes,3,Practical implementation,,both
+feasibility_training,Training,No,Yes,No,No,53,badge,,Yes,4,Practical implementation,,both
+feasibility_cost,Cost,No,Yes,No,No,54,badge,,Yes,5,Practical implementation,,both
+feasibility_burden,Patient burden / risk,No,Yes,No,No,55,badge,,Yes,6,Patient considerations,,both
+feasibility_overall,Overall feasibility,No,Yes,No,No,56,badge,,Yes,90,Overall,overall,both
+feasibility_score,Overall score,No,Yes,No,No,57,text,,Yes,91,Overall,overall,both
+feasibility_comments,Comments,No,Yes,No,Yes,58,longtext,,Yes,100,Overall,comment,detailed
+```
+
+If no fields are explicitly marked `feasibility=Yes`, the page automatically falls back to configured fields named `feasibility` or beginning with `feasibility_`. Fields ending in `_rationale` are excluded.
+
+### Categorical ratings and rationales
+
+Fields using `format=badge` use the same colour rules from `data/badge_styles.csv` as the Standard and Domain Match views. A matching `<field>_rationale` column continues to provide hover, keyboard-focus, click, and tap rationales without adding an information icon.
+
+### Open-text fields
+
+Open text can use `format=text` or `format=longtext`. Long values are shortened in the comparison table and can be opened in full. By default, `longtext` fields and fields marked with a comment/narrative role are Detailed-only, while badge fields and fields marked `feasibility_role=overall` are retained in Compact mode.
 
 ## Prototype disclaimer
 

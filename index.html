@@ -56,11 +56,34 @@
   .heatmap-missing{display:flex;min-height:44px;align-items:center;justify-content:center;color:#98a2b3;background:#fafafa;border:1px dashed #e4e7ec;border-radius:8px}
   .heatmap-name{font-weight:800;color:var(--accent);line-height:1.35}
   .heatmap-name .viewed-marker{margin-left:5px}
+  .feasibility-controls{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 12px}
+  .feasibility-mode-toggle{display:inline-flex;padding:3px;background:#eef2f5;border:1px solid #d9e0e5;border-radius:9px;gap:3px}
+  .feasibility-mode-btn{appearance:none;border:0;background:transparent;color:var(--muted);padding:7px 10px;border-radius:6px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+  .feasibility-mode-btn:hover{color:var(--accent);background:rgba(255,255,255,.72)}
+  .feasibility-mode-btn[aria-pressed="true"]{background:#fff;color:var(--accent);box-shadow:0 1px 4px rgba(0,0,0,.09)}
+  .feasibility-mode-btn:focus-visible{outline:3px solid rgba(36,74,99,.26);outline-offset:2px}
+  .feasibility-scroll-controls{display:flex;gap:6px;align-items:center}
+  .feasibility-scroll-btn{appearance:none;border:1px solid #cfd8df;background:#fff;padding:7px 10px;border-radius:8px;color:var(--accent);font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+  .feasibility-scroll-btn:hover{background:var(--accent2)}
+  .feasibility-scroll-btn:focus-visible{outline:3px solid rgba(36,74,99,.26);outline-offset:2px}
+  .feasibility-table{min-width:1180px;table-layout:auto}
+  .feasibility-table th{position:sticky;top:0;z-index:3;text-align:center;vertical-align:bottom;min-width:150px;max-width:230px;white-space:normal;line-height:1.3}
+  .feasibility-table th:first-child,.feasibility-table td:first-child{position:sticky;left:0;z-index:4;text-align:left;min-width:260px;max-width:340px;background:#fff;border-right:1px solid var(--line)}
+  .feasibility-table th:first-child{z-index:5;background:#fafafa}
+  .feasibility-table tr:hover td{background:#fbfcfd}
+  .feasibility-table tr:hover td:first-child{background:#fbfcfd}
+  .feasibility-table .feasibility-overall{border-left:3px solid #cbd5dc}
+  .feasibility-cell{padding:8px 9px;text-align:center;vertical-align:middle;min-width:150px}
+  .feasibility-text-cell{min-width:260px;max-width:340px;text-align:left}
+  .feasibility-group-label{display:block;margin-bottom:5px;color:#98a2b3;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+  .feasibility-text-inline{font-size:12px;line-height:1.45;color:var(--ink);white-space:normal}
+  .feasibility-text-preview{appearance:none;width:100%;border:1px solid #d9e0e5;background:#fff;border-radius:8px;padding:9px 10px;color:var(--ink);font:inherit;font-size:12px;line-height:1.45;text-align:left;cursor:pointer}
+  .feasibility-text-preview:hover,.feasibility-text-preview:focus-visible{border-color:#aab8c2;background:#fbfcfd;outline:3px solid rgba(36,74,99,.18);outline-offset:1px}
+  .feasibility-preview-more{display:block;margin-top:5px;color:var(--accent);font-size:11px;font-weight:800}
   tr.instrument-row{cursor:pointer} tr.instrument-row:hover{background:#fbfcfd}.name{font-weight:700;color:var(--accent)}.acronym{color:var(--muted);font-weight:500}
   .badge{display:inline-block;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:700;background:#f1f3f5;color:#495057}.b-retained{background:var(--ok);color:#23613b}.b-review{background:var(--warn);color:#7a5a00}.b-identified{background:var(--info);color:#285ea8}
   .badge-rationale{appearance:none;border:0;font-family:inherit;line-height:1.2;cursor:help;display:inline-flex;align-items:center;gap:5px}
   .badge-rationale:hover,.badge-rationale:focus-visible{outline:2px solid rgba(36,74,99,.30);outline-offset:2px}
-  .badge-info-icon{font-size:11px;font-weight:800;opacity:.78}
   .rationale-popover{position:fixed;inset:auto;margin:0;z-index:10000;width:min(390px,calc(100vw - 28px));padding:13px 15px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 14px 38px rgba(0,0,0,.20);font-size:13px;line-height:1.5}
   .rationale-popover:not(:popover-open){display:none}
   .rationale-popover-title{display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:800;color:var(--ink);margin-bottom:6px}
@@ -116,7 +139,7 @@
   .long-section{margin-top:22px}.section-title{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:800;margin:0 0 8px}.long-section div{line-height:1.6}
   .empty{padding:30px;text-align:center;color:var(--muted)}
   @media(max-width:950px){.side-nav{display:none}}
-  @media(max-width:700px){h1{font-size:28px}.meta{align-items:flex-start;flex-direction:column}.view-bar{align-items:flex-start;flex-direction:column}.view-toggle{width:100%}.view-toggle-btn{flex:1;padding:9px 8px;font-size:12px}.heatmap-help{font-size:12px}.heatmap-table th:first-child,.heatmap-table td:first-child{min-width:205px;max-width:240px}.detail-grid{grid-template-columns:1fr}.detail-grid dt{margin-top:10px}.team-logo{width:78px;height:78px}.modal-logo{width:68px;height:68px}.modal-head{padding:14px}.modal-head-actions{gap:4px}.copy-link{padding:7px 8px;font-size:11px}.modal-navigation{grid-template-columns:1fr 1.5fr 1fr;padding:10px 10px;gap:7px}.modal-navigation .btn{min-width:0;padding:9px 7px;font-size:12px}.record-position{font-size:11px}.record-jump{font-size:12px;padding:7px 8px}.keyboard-hints{display:none}.viewed-marker{font-size:9px;padding:2px 5px}.back-results{font-size:12px}}
+  @media(max-width:700px){h1{font-size:28px}.meta{align-items:flex-start;flex-direction:column}.view-bar{align-items:flex-start;flex-direction:column}.view-toggle{width:100%;overflow-x:auto}.view-toggle-btn{flex:1;padding:9px 8px;font-size:12px;white-space:nowrap}.heatmap-help{font-size:12px}.heatmap-table th:first-child,.heatmap-table td:first-child,.feasibility-table th:first-child,.feasibility-table td:first-child{min-width:205px;max-width:240px}.feasibility-controls{align-items:flex-start;flex-direction:column}.feasibility-mode-toggle{width:100%}.feasibility-mode-btn{flex:1}.feasibility-scroll-controls{width:100%}.feasibility-scroll-btn{flex:1}.detail-grid{grid-template-columns:1fr}.detail-grid dt{margin-top:10px}.team-logo{width:78px;height:78px}.modal-logo{width:68px;height:68px}.modal-head{padding:14px}.modal-head-actions{gap:4px}.copy-link{padding:7px 8px;font-size:11px}.modal-navigation{grid-template-columns:1fr 1.5fr 1fr;padding:10px 10px;gap:7px}.modal-navigation .btn{min-width:0;padding:9px 7px;font-size:12px}.record-position{font-size:11px}.record-jump{font-size:12px;padding:7px 8px}.keyboard-hints{display:none}.viewed-marker{font-size:9px;padding:2px 5px}.back-results{font-size:12px}}
 </style>
 </head>
 <body>
@@ -142,7 +165,8 @@
   <div class="view-bar">
     <div class="view-toggle" role="group" aria-label="Results view">
       <button type="button" class="view-toggle-btn" id="standardViewBtn" aria-pressed="true">Standard view</button>
-      <button type="button" class="view-toggle-btn" id="heatmapViewBtn" aria-pressed="false">Domain Match heat map</button>
+      <button type="button" class="view-toggle-btn" id="heatmapViewBtn" aria-pressed="false">Domain Match</button>
+      <button type="button" class="view-toggle-btn" id="feasibilityViewBtn" aria-pressed="false">Feasibility</button>
     </div>
     <div class="heatmap-help" id="viewHelp">Browse the summary table, then select an instrument to open its full record.</div>
   </div>
@@ -158,6 +182,24 @@
       <thead><tr id="heatmapHead"></tr></thead>
       <tbody id="heatmapBody"></tbody>
     </table><div id="heatmapEmpty" class="empty" hidden></div></div></div>
+  </div>
+
+  <div id="feasibilityView" hidden>
+    <div class="feasibility-controls">
+      <div class="feasibility-mode-toggle" role="group" aria-label="Feasibility detail level">
+        <button type="button" class="feasibility-mode-btn" id="feasibilityCompactBtn" aria-pressed="true">Compact</button>
+        <button type="button" class="feasibility-mode-btn" id="feasibilityDetailedBtn" aria-pressed="false">Detailed</button>
+      </div>
+      <div class="feasibility-scroll-controls" aria-label="Horizontal table scrolling">
+        <button type="button" class="feasibility-scroll-btn" id="feasibilityScrollLeft">← Scroll left</button>
+        <button type="button" class="feasibility-scroll-btn" id="feasibilityScrollRight">Scroll right →</button>
+      </div>
+    </div>
+    <div id="feasibilityLegend" class="heatmap-legend" aria-label="Feasibility rating legend"></div>
+    <div class="table-card"><div class="table-wrap feasibility-table-wrap" id="feasibilityTableWrap"><table class="feasibility-table">
+      <thead><tr id="feasibilityHead"></tr></thead>
+      <tbody id="feasibilityBody"></tbody>
+    </table><div id="feasibilityEmpty" class="empty" hidden></div></div></div>
   </div>
 
   <div class="footerbar">
@@ -231,8 +273,10 @@ let originatingRecordId = null;
 let highlightedRecordId = null;
 let resultsScrollY = 0;
 let currentView = 'standard';
+let currentFeasibilityMode = 'compact';
 const VIEWED_KEY = 'asah-functional-outcomes-viewed-instruments';
 const RESULTS_VIEW_KEY = 'asah-functional-outcomes-results-view';
+const FEASIBILITY_MODE_KEY = 'asah-functional-outcomes-feasibility-mode';
 
 function parseCSV(text) {
   const rows = []; let row = [], field = '', quoted = false;
@@ -343,7 +387,8 @@ function showRationale(button,{pinned=false}={}){
   rationalePopoverText.textContent=rationale;
 
   const label=String(button.dataset.rationaleLabel || '').trim();
-  rationalePopoverTitle.textContent=label ? `Rationale: ${label}` : 'Rationale';
+  const customTitle=String(button.dataset.rationaleTitle || '').trim();
+  rationalePopoverTitle.textContent=customTitle || (label ? `Rationale: ${label}` : 'Rationale');
 
   openRationalePopover();
   button.setAttribute('aria-expanded','true');
@@ -513,7 +558,6 @@ function badge(fieldName,value,record){
       aria-expanded="false"
       title="View rationale">
       ${escapeHTML(text)}
-      <span class="badge-info-icon" aria-hidden="true">ⓘ</span>
     </button>`;
 }
 
@@ -593,11 +637,107 @@ function heatmapRating(field,record){
       title="View rationale">${escapeHTML(value)}</button>`;
 }
 
-function renderHeatmapLegend(heatFields,rows){
-  const legend=document.getElementById('heatmapLegend');
-  const preferred=['good','partially good','partially / good','partially or with concerns','partially / with concerns','partially poor','poor','unable to judge','no evidence'];
+function isOverallFeasibilityField(field){
+  const role=String(field?.feasibility_role || '').trim().toLowerCase();
+  const name=String(field?.field || '').trim().toLowerCase();
+  return role==='overall' || name==='feasibility' || name==='feasibility_overall' || name.endsWith('_overall_feasibility') || name.endsWith('_feasibility_overall');
+}
+
+function isFeasibilityDetailedOnly(field){
+  const mode=String(field?.feasibility_mode || '').trim().toLowerCase();
+  const role=String(field?.feasibility_role || '').trim().toLowerCase();
+  if(['detailed','detail','detailed only','detail only'].includes(mode)) return true;
+  if(['both','compact','summary'].includes(mode)) return false;
+  if(yes(field?.feasibility_detail)) return true;
+  if(['comment','comments','narrative','details','detail','open text','text'].includes(role)) return true;
+  if(String(field?.format || '').trim().toLowerCase()==='longtext') return true;
+  if(String(field?.format || '').trim().toLowerCase()==='badge') return false;
+  return !isOverallFeasibilityField(field);
+}
+
+function getFeasibilityFields(mode=currentFeasibilityMode){
+  const explicit=fields.filter(f=>yes(f.feasibility));
+  const selected=explicit.length ? explicit : fields.filter(f=>{
+    const name=String(f.field || '').trim().toLowerCase();
+    if(!name || name.endsWith('_rationale')) return false;
+    return name==='feasibility' || name.startsWith('feasibility_');
+  });
+
+  const ordered=[...selected].sort((a,b)=>{
+    const aOverall=isOverallFeasibilityField(a), bOverall=isOverallFeasibilityField(b);
+    if(aOverall!==bOverall) return aOverall ? 1 : -1;
+    const ao=Number(a.feasibility_order || a.display_order) || 9999;
+    const bo=Number(b.feasibility_order || b.display_order) || 9999;
+    return ao-bo;
+  });
+
+  return mode==='compact' ? ordered.filter(f=>!isFeasibilityDetailedOnly(f)) : ordered;
+}
+
+function feasibilityValue(field,record){
+  const value=String(record?.[field.field] || '').trim();
+  if(!value) return '<span class="heatmap-missing" aria-label="No information available">—</span>';
+
+  if(String(field.format || '').trim().toLowerCase()==='badge'){
+    return heatmapRating(field,record);
+  }
+
+  if(String(field.format || '').trim().toLowerCase()==='url'){
+    return formatValue(field,record,'table');
+  }
+
+  const label=String(field.label || field.field || '').trim();
+  if(value.length<=95){
+    return `<div class="feasibility-text-inline">${escapeHTML(value)}</div>`;
+  }
+
+  const preview=`${value.slice(0,92).trimEnd()}…`;
+  return `<button type="button" class="feasibility-text-preview badge-rationale"
+      data-rationale="${escapeHTML(value)}"
+      data-rationale-title="${escapeHTML(label)}"
+      aria-haspopup="dialog"
+      aria-expanded="false"
+      title="View full text"><span>${escapeHTML(preview)}</span><span class="feasibility-preview-more">View details</span></button>`;
+}
+
+function buildFeasibilityHead(){
+  const head=document.getElementById('feasibilityHead');
+  if(!head) return;
+  head.innerHTML='<th scope="col">Instrument</th>';
+  getFeasibilityFields().forEach(field=>{
+    const th=document.createElement('th');
+    th.scope='col';
+    const group=String(field.feasibility_group || '').trim();
+    const label=String(field.label || field.field || '').trim();
+    th.innerHTML=group ? `<span class="feasibility-group-label">${escapeHTML(group)}</span>${escapeHTML(label)}` : escapeHTML(label);
+    th.title=group ? `${group}: ${label}` : label;
+    if(isOverallFeasibilityField(field)) th.classList.add('feasibility-overall');
+    head.appendChild(th);
+  });
+}
+
+function setFeasibilityMode(mode,{persist=true,rerender=true}={}){
+  currentFeasibilityMode=mode==='detailed' ? 'detailed' : 'compact';
+  document.getElementById('feasibilityCompactBtn')?.setAttribute('aria-pressed',String(currentFeasibilityMode==='compact'));
+  document.getElementById('feasibilityDetailedBtn')?.setAttribute('aria-pressed',String(currentFeasibilityMode==='detailed'));
+  if(persist){
+    try{ localStorage.setItem(FEASIBILITY_MODE_KEY,currentFeasibilityMode); }catch{}
+  }
+  buildFeasibilityHead();
+  if(rerender) render();
+}
+
+function renderFeasibilityLegend(feasFields,rows){
+  const legend=document.getElementById('feasibilityLegend');
+  const badgeFields=feasFields.filter(field=>String(field.format || '').trim().toLowerCase()==='badge');
+  if(!badgeFields.length){ legend.hidden=true; legend.innerHTML=''; return; }
+  renderRatingLegend(legend,badgeFields,rows);
+}
+
+function renderRatingLegend(legend,legendFields,rows){
+  const preferred=['good','partially good','partially / good','partially or with concerns','partially / with concerns','partially poor','poor','very easy','easy','moderate','difficult','very difficult','yes','no','unable to judge','no evidence'];
   const values=[];
-  heatFields.forEach(field=>rows.forEach(record=>{
+  legendFields.forEach(field=>rows.forEach(record=>{
     const value=String(record[field.field] || '').trim();
     if(value && !values.some(existing=>existing.toLowerCase()===value.toLowerCase())) values.push(value);
   }));
@@ -607,26 +747,38 @@ function renderHeatmapLegend(heatFields,rows){
     if(ai===-1) return 1; if(bi===-1) return -1; return ai-bi;
   });
   legend.innerHTML=values.map(value=>{
-    const representative=heatFields.find(field=>rows.some(record=>String(record[field.field] || '').trim().toLowerCase()===value.toLowerCase())) || heatFields[0];
+    const representative=legendFields.find(field=>rows.some(record=>String(record[field.field] || '').trim().toLowerCase()===value.toLowerCase())) || legendFields[0];
     const {background,colour}=badgeColours(representative?.field || '*',value);
     return `<span class="heatmap-legend-item"><span class="heatmap-legend-swatch" style="background:${escapeHTML(background)}" aria-hidden="true"></span><span style="color:${escapeHTML(colour)}">${escapeHTML(value)}</span></span>`;
   }).join('');
   legend.hidden=values.length===0;
 }
 
+function renderHeatmapLegend(heatFields,rows){
+  renderRatingLegend(document.getElementById('heatmapLegend'),heatFields,rows);
+}
+
 function setResultsView(view,{persist=true}={}){
-  currentView=view==='heatmap' ? 'heatmap' : 'standard';
+  currentView=['heatmap','feasibility'].includes(view) ? view : 'standard';
   const standard=currentView==='standard';
+  const heatmap=currentView==='heatmap';
+  const feasibility=currentView==='feasibility';
   document.getElementById('standardView').hidden=!standard;
-  document.getElementById('heatmapView').hidden=standard;
+  document.getElementById('heatmapView').hidden=!heatmap;
+  document.getElementById('feasibilityView').hidden=!feasibility;
   document.getElementById('standardViewBtn').setAttribute('aria-pressed',String(standard));
-  document.getElementById('heatmapViewBtn').setAttribute('aria-pressed',String(!standard));
+  document.getElementById('heatmapViewBtn').setAttribute('aria-pressed',String(heatmap));
+  document.getElementById('feasibilityViewBtn').setAttribute('aria-pressed',String(feasibility));
   document.getElementById('viewHelp').textContent=standard
     ? 'Browse the summary table, then select an instrument to open its full record.'
-    : 'Compare Domain Match components across the currently filtered instruments. Hover, focus, or select a coloured rating to view its rationale.';
+    : heatmap
+      ? 'Compare Domain Match components across the currently filtered instruments. Hover, focus, or select a coloured rating to view its rationale.'
+      : 'Compare feasibility information across instruments. Use Compact for key ratings or Detailed to include longer text fields.';
   document.getElementById('viewTip').textContent=standard
     ? 'Tip: select any row to open the full instrument record.'
-    : 'Tip: select an instrument name to open its full record; coloured cells show component ratings.';
+    : heatmap
+      ? 'Tip: select an instrument name to open its full record; coloured cells show component ratings.'
+      : 'Tip: use the scroll buttons or the horizontal scrollbar to move across feasibility columns; select an instrument name to open its full record.';
   if(persist){
     try{ localStorage.setItem(RESULTS_VIEW_KEY,currentView); }catch{}
   }
@@ -664,6 +816,16 @@ function buildInterface(){
 
   document.getElementById('standardViewBtn').addEventListener('click',()=>setResultsView('standard'));
   document.getElementById('heatmapViewBtn').addEventListener('click',()=>setResultsView('heatmap'));
+  document.getElementById('feasibilityViewBtn').addEventListener('click',()=>setResultsView('feasibility'));
+  document.getElementById('feasibilityCompactBtn').addEventListener('click',()=>setFeasibilityMode('compact'));
+  document.getElementById('feasibilityDetailedBtn').addEventListener('click',()=>setFeasibilityMode('detailed'));
+  document.getElementById('feasibilityScrollLeft').addEventListener('click',()=>document.getElementById('feasibilityTableWrap').scrollBy({left:-480,behavior:'smooth'}));
+  document.getElementById('feasibilityScrollRight').addEventListener('click',()=>document.getElementById('feasibilityTableWrap').scrollBy({left:480,behavior:'smooth'}));
+
+  let savedFeasibilityMode='compact';
+  try{ savedFeasibilityMode=localStorage.getItem(FEASIBILITY_MODE_KEY) || 'compact'; }catch{}
+  setFeasibilityMode(savedFeasibilityMode,{persist:false,rerender:false});
+
   let savedView='standard';
   try{ savedView=localStorage.getItem(RESULTS_VIEW_KEY) || 'standard'; }catch{}
   setResultsView(savedView,{persist:false});
@@ -683,11 +845,14 @@ function render(){
   const rows=filteredRows();
   const tableFields=sortedFields(f=>yes(f.table));
   const heatFields=getHeatmapFields();
+  const feasibilityFields=getFeasibilityFields();
   const tbody=document.getElementById('tbody');
   const heatmapBody=document.getElementById('heatmapBody');
+  const feasibilityBody=document.getElementById('feasibilityBody');
   const viewed=getViewedInstruments();
   const empty=document.getElementById('empty');
   const heatmapEmpty=document.getElementById('heatmapEmpty');
+  const feasibilityEmpty=document.getElementById('feasibilityEmpty');
 
   document.getElementById('count').textContent=rows.length;
   empty.hidden=rows.length!==0;
@@ -744,6 +909,50 @@ function render(){
     }).join('');
 
     heatmapBody.querySelectorAll('.instrument-record-link').forEach(a=>{
+      a.addEventListener('click',e=>{
+        if(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button!==0) return;
+        e.preventDefault();
+        openRecord(a.dataset.recordId,{fromResults:true});
+      });
+    });
+  }
+
+  buildFeasibilityHead();
+  if(!feasibilityFields.length){
+    feasibilityBody.innerHTML='';
+    feasibilityEmpty.hidden=false;
+    feasibilityEmpty.textContent='Feasibility fields are not yet configured for this database.';
+    document.getElementById('feasibilityLegend').hidden=true;
+  }else if(!rows.length){
+    feasibilityBody.innerHTML='';
+    feasibilityEmpty.hidden=false;
+    feasibilityEmpty.textContent='No instruments match the selected filters.';
+    document.getElementById('feasibilityLegend').hidden=true;
+  }else{
+    feasibilityEmpty.hidden=true;
+    renderFeasibilityLegend(feasibilityFields,rows);
+    feasibilityBody.innerHTML=rows.map((record,index)=>{
+      const id=record.id || `row-${index}`;
+      const primary=fields.find(f=>f.format==='primary') || fields.find(f=>f.field==='name');
+      const name=String(primary ? record[primary.field] : record.name || '').trim();
+      const acronym=String(record.acronym || '').trim();
+      const viewedMark=viewed.has(id) ? ' <span class="viewed-marker" title="Viewed">✓ Viewed</span>' : '';
+      const href=record.id ? recordUrl(record.id) : null;
+      const displayName=`${escapeHTML(name)}${acronym ? ` <span class="acronym">(${escapeHTML(acronym)})</span>` : ''}`;
+      const nameCell=href
+        ? `<a class="instrument-record-link heatmap-name" data-record-id="${escapeHTML(id)}" href="${escapeHTML(href.pathname + href.search + href.hash)}">${displayName}</a>${viewedMark}`
+        : `<span class="heatmap-name">${displayName}</span>${viewedMark}`;
+      const cells=feasibilityFields.map(field=>{
+        const isText=String(field.format || '').trim().toLowerCase()!=='badge';
+        const classes=['feasibility-cell'];
+        if(isText) classes.push('feasibility-text-cell');
+        if(isOverallFeasibilityField(field)) classes.push('feasibility-overall');
+        return `<td class="${classes.join(' ')}">${feasibilityValue(field,record)}</td>`;
+      }).join('');
+      return `<tr data-record-id="${escapeHTML(id)}"><td>${nameCell}</td>${cells}</tr>`;
+    }).join('');
+
+    feasibilityBody.querySelectorAll('.instrument-record-link').forEach(a=>{
       a.addEventListener('click',e=>{
         if(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button!==0) return;
         e.preventDefault();
