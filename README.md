@@ -183,7 +183,7 @@ The results page now includes a three-option view toggle:
 
 - **Standard view** — preserves the existing configurable summary table and row-to-record navigation.
 - **Domain Match** — compares component-level Domain Match ratings across the same instruments currently shown by the active search and filters.
-- **Feasibility** — provides a horizontally scrollable comparison table for categorical feasibility ratings and open-text information, with Compact and Detailed modes.
+- **Feasibility** — provides a horizontally scrollable comparison table for categorical feasibility ratings and open-text information, with all configured fields shown in one view.
 
 The selected view is saved in the visitor's browser using `localStorage`, so returning to the page restores the last-used view.
 
@@ -240,10 +240,7 @@ The heat map is not a separate dataset. It uses `filteredRows()`, so all existin
 
 The **Feasibility** tab is designed for wider mixed-format assessments. It uses a sticky instrument-name column, native horizontal scrolling, and dedicated **Scroll left / Scroll right** buttons.
 
-Two display modes are available:
-
-- **Compact** — shows the core feasibility fields intended for rapid comparison, such as categorical ratings and an overall judgement or score.
-- **Detailed** — shows all configured feasibility fields, including longer comments or open-text information.
+All fields configured for the Feasibility tab appear together, including categorical ratings, scores, comments, and open-text information. There is no Compact/Detailed toggle.
 
 Long text is shown as a short preview with **View details**. Selecting the preview opens the complete text in the same accessible popover used for rationales, avoiding excessively tall table rows.
 
@@ -256,23 +253,21 @@ The preferred approach is to add optional feasibility columns to `data/fields.cs
 | `feasibility` | `Yes` to include the field in the Feasibility tab |
 | `feasibility_order` | Optional numeric left-to-right order; falls back to `display_order` |
 | `feasibility_group` | Optional short group label shown above the column label, such as `Practical implementation`, `Patient considerations`, or `Overall` |
-| `feasibility_role` | Optional role. Use `overall` to visually separate an overall judgement/score; use `comment`, `narrative`, `details`, or `open text` for detailed-only text fields |
-| `feasibility_mode` | Optional. Set to `detailed` to hide the field in Compact mode. `both` or `compact` keeps it visible in Compact mode |
-| `feasibility_detail` | Alternative shorthand: `Yes` marks the field as Detailed-only |
+| `feasibility_role` | Optional role. Use `overall` to visually separate an overall judgement/score; use `comment`, `narrative`, `details`, or `open text` for open-text fields |
 
 Example:
 
 ```csv
-field,label,table,popup,filter,search,display_order,format,link_text,feasibility,feasibility_order,feasibility_group,feasibility_role,feasibility_mode
-feasibility_ease,Ease of use,No,Yes,No,No,50,badge,,Yes,1,Practical implementation,,both
-feasibility_time,Time required,No,Yes,No,No,51,badge,,Yes,2,Practical implementation,,both
-feasibility_equipment,Equipment,No,Yes,No,No,52,badge,,Yes,3,Practical implementation,,both
-feasibility_training,Training,No,Yes,No,No,53,badge,,Yes,4,Practical implementation,,both
-feasibility_cost,Cost,No,Yes,No,No,54,badge,,Yes,5,Practical implementation,,both
-feasibility_burden,Patient burden / risk,No,Yes,No,No,55,badge,,Yes,6,Patient considerations,,both
-feasibility_overall,Overall feasibility,No,Yes,No,No,56,badge,,Yes,90,Overall,overall,both
-feasibility_score,Overall score,No,Yes,No,No,57,text,,Yes,91,Overall,overall,both
-feasibility_comments,Comments,No,Yes,No,Yes,58,longtext,,Yes,100,Overall,comment,detailed
+field,label,table,popup,filter,search,display_order,format,link_text,feasibility,feasibility_order,feasibility_group,feasibility_role
+feasibility_ease,Ease of use,No,Yes,No,No,50,badge,,Yes,1,Practical implementation,
+feasibility_time,Time required,No,Yes,No,No,51,badge,,Yes,2,Practical implementation,
+feasibility_equipment,Equipment,No,Yes,No,No,52,badge,,Yes,3,Practical implementation,
+feasibility_training,Training,No,Yes,No,No,53,badge,,Yes,4,Practical implementation,
+feasibility_cost,Cost,No,Yes,No,No,54,badge,,Yes,5,Practical implementation,
+feasibility_burden,Patient burden / risk,No,Yes,No,No,55,badge,,Yes,6,Patient considerations,
+feasibility_overall,Overall feasibility,No,Yes,No,No,56,badge,,Yes,90,Overall,overall
+feasibility_score,Overall score,No,Yes,No,No,57,text,,Yes,91,Overall,overall
+feasibility_comments,Comments,No,Yes,No,Yes,58,longtext,,Yes,100,Overall,comment
 ```
 
 If no fields are explicitly marked `feasibility=Yes`, the page automatically falls back to configured fields named `feasibility` or beginning with `feasibility_`. Fields ending in `_rationale` are excluded.
@@ -283,7 +278,9 @@ Fields using `format=badge` use the same colour rules from `data/badge_styles.cs
 
 ### Open-text fields
 
-Open text can use `format=text` or `format=longtext`. Long values are shortened in the comparison table and can be opened in full. By default, `longtext` fields and fields marked with a comment/narrative role are Detailed-only, while badge fields and fields marked `feasibility_role=overall` are retained in Compact mode.
+Open text can use `format=text` or `format=longtext`. All fields marked `feasibility=Yes` appear in the Feasibility tab. Long values are shortened in the comparison table and can be opened in full with **View details**.
+
+Older `fields.csv` files may still have `feasibility_mode` or `feasibility_detail` columns. These are now ignored; you do not need to remove them from the CSV. To hide an item from the Feasibility tab, change its `feasibility` setting to `No` (when other feasibility fields are explicitly selected).
 
 ## Prototype disclaimer
 
