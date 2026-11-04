@@ -185,7 +185,21 @@ The results page now includes a three-option view toggle:
 - **Domain Match** — compares component-level Domain Match ratings across the same instruments currently shown by the active search and filters.
 - **Feasibility** — provides a horizontally scrollable comparison table for categorical feasibility ratings and open-text information, with all configured fields shown in one view.
 
-The selected view is saved in the visitor's browser using `localStorage`, so returning to the page restores the last-used view.
+The selected view is saved in the visitor's browser using `localStorage`, so returning to the page restores the last-used view when no view is specified in the URL.
+
+### Shareable links to individual tabs
+
+Each results tab now has its own direct URL. Replace `https://YOUR-SITE-URL/` with your actual GitHub Pages (or other hosted) database address:
+
+- **Standard view:** `https://YOUR-SITE-URL/?view=standard`
+- **Domain Match:** `https://YOUR-SITE-URL/?view=domain-match`
+- **Feasibility:** `https://YOUR-SITE-URL/?view=feasibility`
+
+Selecting a tab updates the browser address automatically, without reloading the database. You can copy that address, or choose **Copy tab link** beside the tabs. When someone follows a link, the specified tab opens directly even if they previously selected another tab. Browser Back and Forward buttons also switch between previously visited tabs.
+
+Instrument deep links still work: `?view=domain-match&instrument=FUN001` opens instrument `FUN001` with Domain Match selected behind the pop-up. The `instrument` parameter is excluded when using **Copy tab link** so that the shared link opens the tab itself rather than a specific record.
+
+No changes to `data/instruments.csv`, `data/fields.csv`, or `data/badge_styles.csv` are needed for this feature. Existing bookmarks using `?instrument=...` continue to work, and view-specific links work with the same hosted `index.html` file.
 
 ### Configuring heat map columns
 
@@ -242,7 +256,7 @@ The **Feasibility** tab is designed for wider mixed-format assessments. It uses 
 
 All fields configured for the Feasibility tab appear together, including categorical ratings, scores, comments, and open-text information. There is no Compact/Detailed toggle.
 
-Long text is shown as a short preview with **View details**. Selecting the preview opens the complete text in the same accessible popover used for rationales, avoiding excessively tall table rows.
+Open-text values display in full directly in their Feasibility cells, regardless of length. Text wraps within the column and preserves line breaks. Taller rows may result when the text is long; the table retains horizontal scrolling.
 
 ### Configuring feasibility columns
 
@@ -278,7 +292,7 @@ Fields using `format=badge` use the same colour rules from `data/badge_styles.cs
 
 ### Open-text fields
 
-Open text can use `format=text` or `format=longtext`. All fields marked `feasibility=Yes` appear in the Feasibility tab. Long values are shortened in the comparison table and can be opened in full with **View details**.
+Open text can use `format=text` or `format=longtext`. All fields marked `feasibility=Yes` appear in the Feasibility tab. There is no character limit or truncation in the Feasibility comparison table: all stored text is shown inline with wrapping and preserved line breaks. For CSV data containing commas or line breaks, enclose the value in double quotes.
 
 Older `fields.csv` files may still have `feasibility_mode` or `feasibility_detail` columns. These are now ignored; you do not need to remove them from the CSV. To hide an item from the Feasibility tab, change its `feasibility` setting to `No` (when other feasibility fields are explicitly selected).
 

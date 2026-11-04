@@ -38,6 +38,10 @@
   .view-toggle-btn:hover{color:var(--accent);background:rgba(255,255,255,.72)}
   .view-toggle-btn[aria-pressed="true"]{background:#fff;color:var(--accent);box-shadow:0 1px 4px rgba(0,0,0,.09)}
   .view-toggle-btn:focus-visible{outline:3px solid rgba(36,74,99,.26);outline-offset:2px}
+  .view-actions{display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-wrap:wrap}
+  .view-copy-link{appearance:none;flex-shrink:0;white-space:nowrap;border:1px solid #cfd8df;border-radius:8px;background:#fff;color:var(--accent);padding:8px 11px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+  .view-copy-link:hover{background:var(--accent2)}
+  .view-copy-link:focus-visible{outline:3px solid rgba(36,74,99,.26);outline-offset:2px}
   .heatmap-help{font-size:13px;color:var(--muted);line-height:1.4}
   .heatmap-legend{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 12px;font-size:12px;color:var(--muted)}
   .heatmap-legend-item{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
@@ -71,10 +75,7 @@
   .feasibility-cell{padding:8px 9px;text-align:center;vertical-align:middle;min-width:150px}
   .feasibility-text-cell{min-width:260px;max-width:340px;text-align:left}
   .feasibility-group-label{display:block;margin-bottom:5px;color:#98a2b3;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
-  .feasibility-text-inline{font-size:12px;line-height:1.45;color:var(--ink);white-space:normal}
-  .feasibility-text-preview{appearance:none;width:100%;border:1px solid #d9e0e5;background:#fff;border-radius:8px;padding:9px 10px;color:var(--ink);font:inherit;font-size:12px;line-height:1.45;text-align:left;cursor:pointer}
-  .feasibility-text-preview:hover,.feasibility-text-preview:focus-visible{border-color:#aab8c2;background:#fbfcfd;outline:3px solid rgba(36,74,99,.18);outline-offset:1px}
-  .feasibility-preview-more{display:block;margin-top:5px;color:var(--accent);font-size:11px;font-weight:800}
+  .feasibility-text-inline{font-size:12px;line-height:1.45;color:var(--ink);white-space:pre-wrap;overflow-wrap:anywhere}
   tr.instrument-row{cursor:pointer} tr.instrument-row:hover{background:#fbfcfd}.name{font-weight:700;color:var(--accent)}.acronym{color:var(--muted);font-weight:500}
   .badge{display:inline-block;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:700;background:#f1f3f5;color:#495057}.b-retained{background:var(--ok);color:#23613b}.b-review{background:var(--warn);color:#7a5a00}.b-identified{background:var(--info);color:#285ea8}
   .badge-rationale{appearance:none;border:0;font-family:inherit;line-height:1.2;cursor:help;display:inline-flex;align-items:center;gap:5px}
@@ -134,7 +135,7 @@
   .long-section{margin-top:22px}.section-title{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:800;margin:0 0 8px}.long-section div{line-height:1.6}
   .empty{padding:30px;text-align:center;color:var(--muted)}
   @media(max-width:950px){.side-nav{display:none}}
-  @media(max-width:700px){h1{font-size:28px}.meta{align-items:flex-start;flex-direction:column}.view-bar{align-items:flex-start;flex-direction:column}.view-toggle{width:100%;overflow-x:auto}.view-toggle-btn{flex:1;padding:9px 8px;font-size:12px;white-space:nowrap}.heatmap-help{font-size:12px}.heatmap-table th:first-child,.heatmap-table td:first-child,.feasibility-table th:first-child,.feasibility-table td:first-child{min-width:205px;max-width:240px}.feasibility-controls{align-items:flex-start;flex-direction:column}.feasibility-scroll-controls{width:100%}.feasibility-scroll-btn{flex:1}.detail-grid{grid-template-columns:1fr}.detail-grid dt{margin-top:10px}.team-logo{width:78px;height:78px}.modal-logo{width:68px;height:68px}.modal-head{padding:14px}.modal-head-actions{gap:4px}.copy-link{padding:7px 8px;font-size:11px}.modal-navigation{grid-template-columns:1fr 1.5fr 1fr;padding:10px 10px;gap:7px}.modal-navigation .btn{min-width:0;padding:9px 7px;font-size:12px}.record-position{font-size:11px}.record-jump{font-size:12px;padding:7px 8px}.keyboard-hints{display:none}.viewed-marker{font-size:9px;padding:2px 5px}.back-results{font-size:12px}}
+  @media(max-width:700px){.view-actions{justify-content:flex-start}h1{font-size:28px}.meta{align-items:flex-start;flex-direction:column}.view-bar{align-items:flex-start;flex-direction:column}.view-toggle{width:100%;overflow-x:auto}.view-toggle-btn{flex:1;padding:9px 8px;font-size:12px;white-space:nowrap}.heatmap-help{font-size:12px}.heatmap-table th:first-child,.heatmap-table td:first-child,.feasibility-table th:first-child,.feasibility-table td:first-child{min-width:205px;max-width:240px}.feasibility-controls{align-items:flex-start;flex-direction:column}.feasibility-scroll-controls{width:100%}.feasibility-scroll-btn{flex:1}.detail-grid{grid-template-columns:1fr}.detail-grid dt{margin-top:10px}.team-logo{width:78px;height:78px}.modal-logo{width:68px;height:68px}.modal-head{padding:14px}.modal-head-actions{gap:4px}.copy-link{padding:7px 8px;font-size:11px}.modal-navigation{grid-template-columns:1fr 1.5fr 1fr;padding:10px 10px;gap:7px}.modal-navigation .btn{min-width:0;padding:9px 7px;font-size:12px}.record-position{font-size:11px}.record-jump{font-size:12px;padding:7px 8px}.keyboard-hints{display:none}.viewed-marker{font-size:9px;padding:2px 5px}.back-results{font-size:12px}}
 </style>
 </head>
 <body>
@@ -163,7 +164,10 @@
       <button type="button" class="view-toggle-btn" id="heatmapViewBtn" aria-pressed="false">Domain Match</button>
       <button type="button" class="view-toggle-btn" id="feasibilityViewBtn" aria-pressed="false">Feasibility</button>
     </div>
-    <div class="heatmap-help" id="viewHelp">Browse the summary table, then select an instrument to open its full record.</div>
+    <div class="view-actions">
+      <div class="heatmap-help" id="viewHelp">Browse the summary table, then select an instrument to open its full record.</div>
+      <button type="button" class="view-copy-link" id="copyViewLink" title="Copy a direct link to this tab">Copy tab link</button>
+    </div>
   </div>
 
   <div id="standardView" class="table-card"><div class="table-wrap"><table>
@@ -266,6 +270,7 @@ let resultsScrollY = 0;
 let currentView = 'standard';
 const VIEWED_KEY = 'asah-functional-outcomes-viewed-instruments';
 const RESULTS_VIEW_KEY = 'asah-functional-outcomes-results-view';
+const VIEW_SLUGS = {standard:'standard',heatmap:'domain-match',feasibility:'feasibility'};
 
 function parseCSV(text) {
   const rows = []; let row = [], field = '', quoted = false;
@@ -483,6 +488,42 @@ function instrumentDisplayName(record){
   const acronym=String(record.acronym || '').trim();
   return acronym ? `${name} (${acronym})` : name;
 }
+// Shareable view URLs are independent of the browser's saved last-used view.
+// The existing ?instrument=ID deep links can also be combined with ?view=...
+function viewFromUrl(){
+  const value=new URL(window.location.href).searchParams.get('view');
+  if(value==='domain-match' || value==='heatmap') return 'heatmap';
+  if(value==='feasibility') return 'feasibility';
+  if(value==='standard') return 'standard';
+  return null;
+}
+
+function viewUrl(view=currentView,{keepInstrument=false}={}){
+  const url=new URL(window.location.href);
+  url.searchParams.set('view',VIEW_SLUGS[view] || VIEW_SLUGS.standard);
+  if(!keepInstrument) url.searchParams.delete('instrument');
+  return url;
+}
+
+function updateBrowserViewUrl(view,{replace=false,keepInstrument=false}={}){
+  const url=viewUrl(view,{keepInstrument});
+  if(url.href===window.location.href) return;
+  if(replace) history.replaceState(null,'',url);
+  else history.pushState(null,'',url);
+}
+
+async function copyCurrentViewLink(){
+  const link=viewUrl().href;
+  const button=document.getElementById('copyViewLink');
+  try{
+    await navigator.clipboard.writeText(link);
+    button.textContent='Copied!';
+    setTimeout(()=>{ button.textContent='Copy tab link'; },1400);
+  }catch{
+    window.prompt('Copy this tab link:',link);
+  }
+}
+
 function recordUrl(id){
   const url=new URL(window.location.href);
   url.searchParams.set('instrument',id);
@@ -662,18 +703,8 @@ function feasibilityValue(field,record){
     return formatValue(field,record,'table');
   }
 
-  const label=String(field.label || field.field || '').trim();
-  if(value.length<=95){
-    return `<div class="feasibility-text-inline">${escapeHTML(value)}</div>`;
-  }
-
-  const preview=`${value.slice(0,92).trimEnd()}…`;
-  return `<button type="button" class="feasibility-text-preview badge-rationale"
-      data-rationale="${escapeHTML(value)}"
-      data-rationale-title="${escapeHTML(label)}"
-      aria-haspopup="dialog"
-      aria-expanded="false"
-      title="View full text"><span>${escapeHTML(preview)}</span><span class="feasibility-preview-more">View details</span></button>`;
+  // Show the entire value inline, with no preview or character limit.
+  return `<div class="feasibility-text-inline">${escapeHTML(value)}</div>`;
 }
 
 function buildFeasibilityHead(){
@@ -723,7 +754,7 @@ function renderHeatmapLegend(heatFields,rows){
   renderRatingLegend(document.getElementById('heatmapLegend'),heatFields,rows);
 }
 
-function setResultsView(view,{persist=true}={}){
+function setResultsView(view,{persist=true,urlMode=null,keepInstrument=false}={}){
   currentView=['heatmap','feasibility'].includes(view) ? view : 'standard';
   const standard=currentView==='standard';
   const heatmap=currentView==='heatmap';
@@ -747,6 +778,7 @@ function setResultsView(view,{persist=true}={}){
   if(persist){
     try{ localStorage.setItem(RESULTS_VIEW_KEY,currentView); }catch{}
   }
+  if(urlMode) updateBrowserViewUrl(currentView,{replace:urlMode==='replace',keepInstrument});
 }
 
 function buildInterface(){
@@ -779,9 +811,10 @@ function buildInterface(){
     heatmapHead.appendChild(th);
   });
 
-  document.getElementById('standardViewBtn').addEventListener('click',()=>setResultsView('standard'));
-  document.getElementById('heatmapViewBtn').addEventListener('click',()=>setResultsView('heatmap'));
-  document.getElementById('feasibilityViewBtn').addEventListener('click',()=>setResultsView('feasibility'));
+  document.getElementById('standardViewBtn').addEventListener('click',()=>setResultsView('standard',{urlMode:'push'}));
+  document.getElementById('heatmapViewBtn').addEventListener('click',()=>setResultsView('heatmap',{urlMode:'push'}));
+  document.getElementById('feasibilityViewBtn').addEventListener('click',()=>setResultsView('feasibility',{urlMode:'push'}));
+  document.getElementById('copyViewLink').addEventListener('click',copyCurrentViewLink);
   document.getElementById('feasibilityScrollLeft').addEventListener('click',()=>document.getElementById('feasibilityTableWrap').scrollBy({left:-480,behavior:'smooth'}));
   document.getElementById('feasibilityScrollRight').addEventListener('click',()=>document.getElementById('feasibilityTableWrap').scrollBy({left:480,behavior:'smooth'}));
 
@@ -789,8 +822,23 @@ function buildInterface(){
 
   let savedView='standard';
   try{ savedView=localStorage.getItem(RESULTS_VIEW_KEY) || 'standard'; }catch{}
-  setResultsView(savedView,{persist:false});
+  // An explicit ?view= link overrides localStorage; older URLs still use the saved tab.
+  // Canonicalize the address-bar URL so copying it always opens the visible tab.
+  setResultsView(viewFromUrl() || savedView,{urlMode:'replace',keepInstrument:true});
 }
+
+// Browser Back/Forward should follow tab changes, including URLs with instrument IDs.
+window.addEventListener('popstate',()=>{
+  if(!instruments.length) return;
+  setResultsView(viewFromUrl() || 'standard');
+  const requestedId=new URL(window.location.href).searchParams.get('instrument');
+  if(requestedId && instruments.some(record=>(record.id || '')===requestedId)){
+    if(currentRecordId!==requestedId) openRecord(requestedId,{fromUrl:true});
+  }else if(dialog.open){
+    highlightedRecordId=currentRecordId;
+    dialog.close();
+  }
+});
 
 function filteredRows(){
   const q=document.getElementById('search').value.trim().toLowerCase();
