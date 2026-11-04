@@ -195,9 +195,9 @@ Each results tab now has its own direct URL. Replace `https://YOUR-SITE-URL/` wi
 - **Domain Match:** `https://YOUR-SITE-URL/?view=domain-match`
 - **Feasibility:** `https://YOUR-SITE-URL/?view=feasibility`
 
-Selecting a tab updates the browser address automatically, without reloading the database. You can copy that address, or choose **Copy tab link** beside the tabs. When someone follows a link, the specified tab opens directly even if they previously selected another tab. Browser Back and Forward buttons also switch between previously visited tabs.
+Selecting a tab updates the browser address automatically, without reloading the database. To share a tab, copy its URL directly from the browser address bar (there is no separate Copy tab link button). When someone follows a link, the specified tab opens directly even if they previously selected another tab. Browser Back and Forward buttons also switch between previously visited tabs.
 
-Instrument deep links still work: `?view=domain-match&instrument=FUN001` opens instrument `FUN001` with Domain Match selected behind the pop-up. The `instrument` parameter is excluded when using **Copy tab link** so that the shared link opens the tab itself rather than a specific record.
+Instrument deep links still work: `?view=domain-match&instrument=FUN001` opens instrument `FUN001` with Domain Match selected behind the pop-up. For a link to the tab alone, copy the browser URL when no instrument record is open (i.e., when the URL does not contain `instrument=...`). The separate Copy link button inside an instrument record is retained.
 
 No changes to `data/instruments.csv`, `data/fields.csv`, or `data/badge_styles.csv` are needed for this feature. Existing bookmarks using `?instrument=...` continue to work, and view-specific links work with the same hosted `index.html` file.
 
@@ -287,6 +287,15 @@ feasibility_comments,Comments,No,Yes,No,Yes,58,longtext,,Yes,100,Overall,comment
 If no fields are explicitly marked `feasibility=Yes`, the page automatically falls back to configured fields named `feasibility` or beginning with `feasibility_`. Fields ending in `_rationale` are excluded.
 
 ### Categorical ratings and rationales
+
+The Feasibility legend is fixed, regardless of the ratings present in the filtered instruments:
+
+- **0 Green:** practical advantage / manageable requirement
+- **1 Amber:** additional requirement or concern
+- **2 Red:** documented substantial obstacle
+- **U White:** missing/conflicting information prevents assessment
+
+**No Yellow category.** The supplied `data/badge_styles.csv` gives feasibility ratings these matching colours (including replacing the older yellow/orange/3-grade style). When deploying this update, replace **both** `index.html` and `data/badge_styles.csv` to keep the legend and actual badges consistent; `data/instruments.csv` and `data/fields.csv` do not need changing.
 
 Fields using `format=badge` use the same colour rules from `data/badge_styles.csv` as the Standard and Domain Match views. A matching `<field>_rationale` column continues to provide hover, keyboard-focus, click, and tap rationales without adding an information icon.
 
