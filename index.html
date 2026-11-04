@@ -46,7 +46,6 @@
   .feasibility-legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:10px 20px}
   .feasibility-legend .heatmap-legend-item{white-space:normal;align-items:flex-start;line-height:1.45}
   .feasibility-legend .heatmap-legend-swatch{margin-top:1px}
-  .feasibility-legend-note{grid-column:1/-1;font-size:12px;color:var(--muted)}
   .heatmap-table{min-width:980px;table-layout:auto}
   .heatmap-table th{position:sticky;top:0;z-index:3;text-align:center;vertical-align:bottom;min-width:145px;max-width:210px;white-space:normal;line-height:1.3}
   .heatmap-table th:first-child,.heatmap-table td:first-child{position:sticky;left:0;z-index:4;text-align:left;min-width:260px;max-width:340px;background:#fff;border-right:1px solid var(--line)}
@@ -157,7 +156,7 @@
     <div><label for="search">Search instruments</label><input id="search" placeholder="Search instrument information…" /></div>
   </div>
 
-  <div class="meta"><div><strong id="count">0</strong> instruments shown</div><div>Database version: <strong>Prototype 0.1</strong> · Updated September 2026</div></div>
+  <div class="meta"><div><strong id="count">0</strong> instruments shown</div><div>Database version: <strong>Version 1</strong> · Updated November 4, 2026</div></div>
 
   <div class="view-bar">
     <div class="view-toggle" role="group" aria-label="Results view">
@@ -727,7 +726,7 @@ function renderFeasibilityLegend(feasFields,rows){
   legend.innerHTML=categories.map(({value,name,description})=>{
     const {background}=badgeColours(badgeField.field,value);
     return `<span class="heatmap-legend-item"><span class="heatmap-legend-swatch" style="background:${escapeHTML(background)}" aria-hidden="true"></span><span><strong>${value} ${name}:</strong> ${escapeHTML(description)}</span></span>`;
-  }).join('')+'<span class="feasibility-legend-note">No Yellow category.</span>';
+  }).join('');
   legend.hidden=false;
 }
 
@@ -769,8 +768,8 @@ function setResultsView(view,{persist=true,urlMode=null,keepInstrument=false}={}
   document.getElementById('viewHelp').textContent=standard
     ? 'Browse the summary table, then select an instrument to open its full record.'
     : heatmap
-      ? 'Compare Domain Match components across the currently filtered instruments. Hover, focus, or select a coloured rating to view its rationale.'
-      : 'Compare all feasibility ratings and open-text fields across instruments. Scroll horizontally to see additional columns.';
+      ? 'This view provides a breakdown of our domain match assessment, where we considered whether an instrument measured one or more of the 5 key components of the consensus definition for Functional Outcomes.'
+      : 'Compare all feasibility ratings and open-text fields across instruments. Scroll horizontally to see additional columns. Hover, focus, or select a coloured rating to view a description of its classification.';
   document.getElementById('viewTip').textContent=standard
     ? 'Tip: select any row to open the full instrument record.'
     : heatmap
