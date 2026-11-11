@@ -1,4 +1,4 @@
-# Functional Outcomes aSAH Measurement Instrument Database — prototype
+# Functional Outcomes aSAH Measurement Instrument Database
 
 - `data/instruments.csv` contains the instrument records.
 - `data/fields.csv` controls which fields appear in the main table, pop-up, filters, and search.
