@@ -2,6 +2,7 @@
 
 - `data/instruments.csv` contains the instrument records.
 - `data/fields.csv` controls which fields appear in the main table, pop-up, filters, and search.
+- `data/top_instruments.csv` controls the Top Instruments tab and vote totals.
 - `images/` contains the SAH HOPE logo and instrument graphics.
 - URL fields can render as clickable links with link text configured entirely in `data/fields.csv`.
 
@@ -16,6 +17,7 @@ data/
   instruments.csv
   fields.csv
   badge_styles.csv
+  top_instruments.csv
 
 images/
   team-logo.svg
@@ -179,11 +181,12 @@ Native popovers are also placed in the browser's **top layer**, so the rationale
 
 ## Domain Match heat map view
 
-The results page now includes a three-option view toggle:
+The results page now includes a four-option view toggle:
 
 - **Standard view** — preserves the existing configurable summary table and row-to-record navigation.
 - **Domain Match** — compares component-level Domain Match ratings across the same instruments currently shown by the active search and filters.
 - **Feasibility** — provides a horizontally scrollable comparison table for categorical feasibility ratings and open-text information, with all configured fields shown in one view.
+- **Top Instruments** — displays the seven instruments recommended for further consideration, ranked by votes. Equal vote counts share the same rank; the list is distinct from final COS endorsements.
 
 The selected view is saved in the visitor's browser using `localStorage`, so returning to the page restores the last-used view when no view is specified in the URL.
 
@@ -194,6 +197,7 @@ Each results tab now has its own direct URL. Replace `https://YOUR-SITE-URL/` wi
 - **Standard view:** `https://YOUR-SITE-URL/?view=standard`
 - **Domain Match:** `https://YOUR-SITE-URL/?view=domain-match`
 - **Feasibility:** `https://YOUR-SITE-URL/?view=feasibility`
+- **Top Instruments:** `https://YOUR-SITE-URL/?view=top-instruments`
 
 Selecting a tab updates the browser address automatically, without reloading the database. To share a tab, copy its URL directly from the browser address bar (there is no separate Copy tab link button). When someone follows a link, the specified tab opens directly even if they previously selected another tab. Browser Back and Forward buttons also switch between previously visited tabs.
 
@@ -250,8 +254,45 @@ The heat map automatically builds a legend from rating values present in the cur
 
 The heat map is not a separate dataset. It uses `filteredRows()`, so all existing search and dropdown filters apply identically in both views. Selecting an instrument name in the heat map opens the same detailed instrument record, including viewed markers and record navigation.
 
-## Feasibility comparison view
+## Top Instruments voting shortlist (CSV-configurable)
 
+The **Top Instruments** tab reads **`data/top_instruments.csv`** each time the website loads. You can update the shortlist without editing `index.html` or the instrument data. The included CSV initially lists the seven recommendations and their vote counts. **Upload this new CSV alongside the updated `index.html`; it is a separate file from `data/instruments.csv`.**
+
+### Editing the shortlist
+
+Open **`data/top_instruments.csv`** in GitHub's editor or in Excel, modify the rows, and save/commit the file. The browser will display all valid rows, **sort automatically by votes (highest first)**, and assign shared ranks to tied vote totals. Add a new row for a new instrument; delete a row to remove it. The shortlist is independent of the database's search and filters.
+
+CSV columns:
+
+| Column | Required? | Purpose |
+|---|---|---|
+| `name` | **Yes** | Instrument's full name; used for display and matching instrument records. |
+| `acronym` | No | Abbreviation shown next to the name and used to match instrument records. |
+| `votes` | **Yes** | Non-negative whole number of votes; controls sort order and the vote bar. |
+| `display_name` | No | Overrides the displayed name when you want an alternative label (e.g., including `(IADL)` within the name). |
+| `aliases` | No | Alternative names for matching to `data/instruments.csv`, separated with `|`. |
+| `record_id` | No | Exact `id` from `data/instruments.csv` to link a specific record when names/acronyms are ambiguous. |
+
+A minimal CSV with the two required columns works:
+
+```csv
+name,votes
+Subarachnoid Hemorrhage Outcome Tool,5
+Functional Status Examination,4
+Modified Rankin Scale,1
+```
+
+For best matching, keep the supplied `acronym` and `aliases` values. The provided CSV contains all six columns; optional values can be left blank. If you use Excel, save as **CSV UTF-8 (comma delimited)**; names with commas should be quoted. Avoid changing the column headers. Invalid rows (missing name or invalid votes) are skipped with an onscreen message.
+
+### Display, links and exporting
+
+- All valid recommendations appear, even if they do not have a matching full instrument record in `data/instruments.csv`. A name becomes clickable only when the match is unambiguous, or the optional `record_id` identifies a valid record.
+- Linked records open the same full pop-ups; previous/next follow the shortlist order. Viewed markers and deep links still work.
+- **Print current view** prints/saves the current shortlist. **Download shortlist (.csv)** exports the *currently displayed rankings* (rank, instrument name, acronym and votes); it does not edit the source CSV on GitHub.
+- Direct URL: `?view=top-instruments`. Vote totals represent recommendations for further consideration, **not** final COS endorsements.
+- If `data/top_instruments.csv` is missing, the tab displays an error explaining which file to upload. Other tabs still work.
+
+## Feasibility comparison view
 The **Feasibility** tab is designed for wider mixed-format assessments. It uses a sticky instrument-name column, native horizontal scrolling, and dedicated **Scroll left / Scroll right** buttons.
 
 All fields configured for the Feasibility tab appear together, including categorical ratings, scores, comments, and open-text information. There is no Compact/Detailed toggle.
