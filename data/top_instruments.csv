@@ -1,8 +1,8 @@
-name,acronym,votes,display_name,aliases,record_id
-Subarachnoid Hemorrhage Outcome Tool,SAHOT,5,,Subarachnoid Haemorrhage Outcome Tool,
-Patient-Reported Outcomes Measurement Information System,PROMIS,4,,Patient Reported Outcomes Measurement Information System|Patient-Reported Outcome Measurement Information System,
-Functional Status Examination,FSE,4,,,
-Glasgow Outcome Scale Extended,GOSE,3,,Glasgow Outcome Scale - Extended|Glasgow Outcome Scale-Extended|Extended Glasgow Outcome Scale|Glasgow Outcome Scale – Extended,
-Brain Injury Community Rehabilitation Outcome 39,BICRO-39,2,,Brain Injury Community Rehabilitation Outcome Scales|Brain Injury Community Rehabilitation Outcome Scale|Brain Injury Community Rehabilitation Outcomes 39|Brain Injury Community Rehabilitation Outcome 39-item,
-Modified Rankin Scale,mRS,1,,,
-Lawton instrumental activity of daily living scale,IADL,1,Lawton instrumental activity of daily living (IADL) scale,Lawton Instrumental Activities of Daily Living Scale|Lawton Instrumental Activities of Daily Living|Lawton IADL Scale|Lawton IADL|Lawton instrumental activity of daily living,
+name,acronym,votes,record_id
+Subarachnoid Hemorrhage Outcome Tool,SAHOT,6,
+Patient-Reported Outcomes Measurement Information System,PROMIS,4,
+Functional Status Examination,FSE,4,
+Glasgow Outcome Scale Extended,GOSE,3,
+Brain Injury Community Rehabilitation Outcome 39,BICRO-39,2,
+Modified Rankin Scale,mRS,2,
+Lawton instrumental activity of daily living scale,IADL,1,
